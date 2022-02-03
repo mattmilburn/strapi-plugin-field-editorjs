@@ -1,0 +1,44 @@
+{
+  "name": "strapi-plugin-field-editorjs",
+  "version": "0.0.0",
+  "description": "Replace default WYSIWYG editor with EditorJS.",
+  "strapi": {
+    "name": "EditorJS Field",
+    "description": "Replace default WYSIWYG editor with EditorJS.",
+    "kind": "plugin"
+  },
+  "author": {
+    "name": "Matt Milburn"
+  },
+  "maintainers": [
+    {
+      "name": "Matt Milburn"
+    }
+  ],
+  "homepage": "https://github.com/mattmilburn/strapi-plugin-field-editorjs#readme",
+  "bugs": {
+    "url": "https://github.com/mattmilburn/strapi-plugin-field-editorjs/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattmilburn/strapi-plugin-field-editorjs.git"
+  },
+  "engines": {
+    "node": ">=12.x. <=16.x.x",
+    "npm": ">=6.0.0"
+  },
+  "keywords": [
+    "strapi",
+    "plugin",
+    "wysiwyg",
+    "richtext",
+    "content",
+    "block",
+    "editor",
+    "editorjs"
+  ]
+}
