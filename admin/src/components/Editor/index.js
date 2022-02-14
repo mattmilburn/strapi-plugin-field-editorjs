@@ -2,7 +2,7 @@ import React, { memo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import EditorJS from '@editorjs/editorjs';
 
-import './styles.css';
+import { StyledEditor } from './styled.js';
 
 const Editor = ( {
   // error,
@@ -13,20 +13,13 @@ const Editor = ( {
   const editor = useRef( null );
   const editorRef = useRef( null );
 
-  const editorStyles = {
-    paddingTop: '16px',
-    paddingLeft: '16px',
-    paddingRight: '16px',
-    border: '1px solid #dcdce4',
-    borderRadius: '4px',
-  };
-
   const emptyValue = {
     blocks: [],
     time: Date.now(),
     version: EditorJS.version,
   };
 
+  // Handle ready-state logic for editor.
   const handleReady = () => {
     if ( ! value ) {
       return;
@@ -58,6 +51,7 @@ const Editor = ( {
     }
   };
 
+  // Handle change-state logic for editor.
   const handleChange = async () => {
     const data = await editor.current.save();
 
@@ -77,14 +71,14 @@ const Editor = ( {
       holder: editorRef.current,
       logLevel: 'VERBOSE',
       onReady: handleReady,
-      onChange: handleChange, // () => handleChange(),
+      onChange: handleChange,
       // tools,
     } );
 
     return () => editor.current && editor.current.destroy();
   }, [] );
 
-  return <div ref={ editorRef } style={ editorStyles } />;
+  return <StyledEditor ref={ editorRef } />;
 };
 
 Editor.propTypes = {
