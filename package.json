@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.23.2",
+    "@strapi/design-system": "^0.0.1-alpha.75",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
+    "react-intl": "^5.24.6",
     "styled-components": "^5.3.3"
   },
   "engines": {
