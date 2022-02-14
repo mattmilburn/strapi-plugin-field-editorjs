@@ -9,7 +9,7 @@ import { LabelAction, StyledEditor } from './styled.js';
 
 const Editor = ( {
   description,
-  // disabled,
+  disabled,
   error,
   id,
   intlLabel,
@@ -92,11 +92,18 @@ const Editor = ( {
     : name;
 
   useEffect( () => {
+    if ( editor.current ) {
+      editor.current.readOnly.toggle();
+    }
+  }, [ disabled ] );
+
+  useEffect( () => {
     editor.current = new EditorJS( {
       minHeight: 16,
       data: value ?? emptyValue,
       holder: editorRef.current,
       logLevel: 'VERBOSE',
+      readOnly: disabled,
       onReady: handleReady,
       onChange: handleChange,
       // tools,
@@ -126,7 +133,7 @@ const Editor = ( {
 
 Editor.defaultProps = {
   description: null,
-  // disabled: true,
+  disabled: false,
   error: undefined,
   id: undefined,
   labelAction: undefined,
@@ -142,7 +149,7 @@ Editor.propTypes = {
     defaultMessage: PropTypes.string.isRequired,
     values: PropTypes.object,
   } ),
-  // disabled: PropTypes.bool,
+  disabled: PropTypes.bool,
   error: PropTypes.string,
   id: PropTypes.string,
   intlLabel: PropTypes.shape( {
