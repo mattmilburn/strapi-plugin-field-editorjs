@@ -1,15 +1,26 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useIntl } from 'react-intl';
 import EditorJS from '@editorjs/editorjs';
+import { Flex, Stack } from '@strapi/design-system';
+import { Field, FieldError, FieldHint, FieldLabel } from '@strapi/design-system/Field';
 
-import { StyledEditor } from './styled.js';
+import { LabelAction, StyledEditor } from './styled.js';
 
 const Editor = ( {
-  // error,
+  description,
+  // disabled,
+  error,
+  id,
+  intlLabel,
+  labelAction,
   name,
   onChange,
+  // placeholder,
+  required,
   value,
 } ) => {
+  const { formatMessage } = useIntl();
   const editor = useRef( null );
   const editorRef = useRef( null );
 
@@ -64,6 +75,22 @@ const Editor = ( {
     } );
   };
 
+  const errorMessage = error ? formatMessage( { id: error, defaultMessage: error } ) : '';
+
+  const hint = description
+    ? formatMessage(
+        { id: description.id, defaultMessage: description.defaultMessage },
+        { ...description.values }
+      )
+    : '';
+
+  const label = intlLabel.id
+    ? formatMessage(
+        { id: intlLabel.id, defaultMessage: intlLabel.defaultMessage },
+        { ...intlLabel.values }
+      )
+    : name;
+
   useEffect( () => {
     editor.current = new EditorJS( {
       minHeight: 16,
@@ -78,14 +105,61 @@ const Editor = ( {
     return () => editor.current && editor.current.destroy();
   }, [] );
 
-  return <StyledEditor ref={ editorRef } />;
+  return (
+    <Field name={ name } error={ error } hint={ hint } id={ id }>
+      <Stack size={ 1 }>
+        <Flex>
+          <FieldLabel required={ required }>{ label }</FieldLabel>
+          { labelAction && (
+            <LabelAction paddingLeft={ 1 }>
+              { labelAction }
+            </LabelAction>
+          ) }
+        </Flex>
+        <StyledEditor ref={ editorRef } />
+        <FieldHint />
+        <FieldError />
+      </Stack>
+    </Field>
+  );
+};
+
+Editor.defaultProps = {
+  description: null,
+  // disabled: true,
+  error: undefined,
+  id: undefined,
+  labelAction: undefined,
+  name: '',
+  // placeholder: null,
+  required: false,
+  value: '',
 };
 
 Editor.propTypes = {
-  // error: PropTypes.string,
+  description: PropTypes.shape( {
+    id: PropTypes.string.isRequired,
+    defaultMessage: PropTypes.string.isRequired,
+    values: PropTypes.object,
+  } ),
+  // disabled: PropTypes.bool,
+  error: PropTypes.string,
+  id: PropTypes.string,
+  intlLabel: PropTypes.shape( {
+    id: PropTypes.string.isRequired,
+    defaultMessage: PropTypes.string.isRequired,
+    values: PropTypes.object,
+  } ).isRequired,
+  labelAction: PropTypes.element,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  // placeholder: PropTypes.shape( {
+  //   id: PropTypes.string.isRequired,
+  //   defaultMessage: PropTypes.string.isRequired,
+  //   values: PropTypes.object,
+  // } ),
+  required: PropTypes.bool,
   value: PropTypes.string,
 };
 
-export default memo( Editor );
+export default Editor;
