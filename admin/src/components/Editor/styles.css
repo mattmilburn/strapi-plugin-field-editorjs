@@ -1,0 +1,18 @@
+@media ( min-width: 768px ) {
+  /* Remove max-width from editor and toolbar content. */
+  .ce-block__content,
+  .ce-toolbar__content {
+    max-width: none;
+  }
+
+  /* Fix toolbar alignment since removing max-width constraint.  */
+  .ce-toolbar__actions {
+    top: 4px;
+    right: 4px;
+  }
+}
+
+/* Keep toolbar content positioned on top of adjacent blocks. */
+.ce-toolbar--opened {
+  z-index: 1;
+}

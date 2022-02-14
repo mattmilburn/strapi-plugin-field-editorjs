@@ -1,35 +1,43 @@
 {
   "name": "strapi-plugin-field-editorjs",
   "version": "0.0.0",
-  "description": "Replace default WYSIWYG editor with EditorJS.",
+  "description": "A plugin for Strapi CMS that replaces the default wysiwyg editor with Editor.js.",
+  "license": "MIT",
   "strapi": {
-    "name": "EditorJS Field",
-    "description": "Replace default WYSIWYG editor with EditorJS.",
+    "displayName": "EditorJS Field",
+    "name": "field-editorjs",
+    "description": "A plugin for Strapi CMS that replaces the default wysiwyg editor with Editor.js.",
     "kind": "plugin"
   },
+  "peerDependencies": {
+    "@strapi/strapi": "^4.0.7"
+  },
+  "dependencies": {
+    "@editorjs/editorjs": "^2.23.2",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "styled-components": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=12.x. <=16.x.x",
+    "npm": ">=6.0.0"
+  },
   "author": {
-    "name": "Matt Milburn"
+    "name": "Matt Milburn",
+    "url": "https://github.com/mattmilburn"
   },
   "maintainers": [
     {
-      "name": "Matt Milburn"
+      "name": "Matt Milburn",
+      "url": "https://github.com/mattmilburn"
     }
   ],
-  "homepage": "https://github.com/mattmilburn/strapi-plugin-field-editorjs#readme",
-  "bugs": {
-    "url": "https://github.com/mattmilburn/strapi-plugin-field-editorjs/issues"
-  },
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mattmilburn/strapi-plugin-field-editorjs.git"
-  },
-  "engines": {
-    "node": ">=12.x. <=16.x.x",
-    "npm": ">=6.0.0"
   },
   "keywords": [
     "strapi",
