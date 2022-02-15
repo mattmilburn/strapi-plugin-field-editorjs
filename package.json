@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.23.2",
+    "@editorjs/paragraph": "^2.8.0",
     "@strapi/design-system": "^0.0.1-alpha.75",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
