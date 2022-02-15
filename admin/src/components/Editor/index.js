@@ -16,7 +16,6 @@ const Editor = ( {
   labelAction,
   name,
   onChange,
-  // placeholder,
   required,
   value,
 } ) => {
@@ -138,7 +137,6 @@ Editor.defaultProps = {
   id: undefined,
   labelAction: undefined,
   name: '',
-  // placeholder: null,
   required: false,
   value: '',
 };
@@ -160,11 +158,6 @@ Editor.propTypes = {
   labelAction: PropTypes.element,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  // placeholder: PropTypes.shape( {
-  //   id: PropTypes.string.isRequired,
-  //   defaultMessage: PropTypes.string.isRequired,
-  //   values: PropTypes.object,
-  // } ),
   required: PropTypes.bool,
   value: PropTypes.string,
 };
