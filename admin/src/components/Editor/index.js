@@ -6,6 +6,7 @@ import { Flex, Stack } from '@strapi/design-system';
 import { Field, FieldError, FieldHint, FieldLabel } from '@strapi/design-system/Field';
 
 import { LabelAction, StyledEditor } from './styled.js';
+import tools from '../../tools';
 
 const Editor = ( {
   description,
@@ -105,7 +106,7 @@ const Editor = ( {
       readOnly: disabled,
       onReady: handleReady,
       onChange: handleChange,
-      // tools,
+      tools,
     } );
 
     return () => editor.current && editor.current.destroy();
