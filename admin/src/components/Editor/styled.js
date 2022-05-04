@@ -8,9 +8,9 @@ export const LabelAction = styled( Box )`
 `;
 
 export const StyledEditor = styled.div`
-  padding-top: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-top: ${({ theme }) => theme.spaces[4]};
+  padding-left: ${({ theme }) => theme.spaces[4]};
+  padding-right: ${({ theme }) => theme.spaces[4]};
   border: 1px solid ${({ theme, hasError }) => (hasError ? theme.colors.danger600 : theme.colors.neutral200)};
   border-radius: ${({ theme }) => theme.borderRadius};
 
@@ -30,5 +30,19 @@ export const StyledEditor = styled.div`
   /* Keep toolbar content positioned on top of adjacent blocks. */
   .ce-toolbar--opened {
     z-index: 1;
+  }
+
+  /* Apply Strapi theme to settings button. */
+  .ce-toolbar__settings-btn {
+    background-color: ${({ theme }) => theme.colors.neutral0};
+    border: 1px solid ${({ theme }) => theme.colors.neutral200};
+    box-shadow: ${({ theme }) => theme.shadows.filterShadow};
+    color: ${({ theme }) => theme.colors.neutral500};
+  }
+
+  .ce-toolbar__settings-btn--active,
+  .ce-toolbar__settings-btn:hover {
+    border-color: ${({ theme }) => theme.colors.neutral600};
+    color: ${({ theme }) => theme.colors.neutral600};
   }
 `;

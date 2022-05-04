@@ -8,10 +8,10 @@ module.exports = {
     default: {},
     validator() {},
   },
+  contentTypes: {},
   controllers: {},
+  middlewares: {},
+  policies: {},
   routes: [],
   services: {},
-  contentTypes: {},
-  policies: {},
-  middlewares: {},
 };
