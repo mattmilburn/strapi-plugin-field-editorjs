@@ -10,19 +10,19 @@
     "kind": "plugin"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4.0.7"
+    "@strapi/design-system": "^0.0.1-alpha.79",
+    "@strapi/strapi": "^4.1.9"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.23.2",
     "@editorjs/paragraph": "^2.8.0",
-    "@strapi/design-system": "^0.0.1-alpha.75",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-intl": "^5.24.6",
     "styled-components": "^5.3.3"
   },
   "engines": {
-    "node": ">=12.x. <=16.x.x",
+    "node": ">=12.x.x <=16.x.x",
     "npm": ">=6.0.0"
   },
   "author": {
