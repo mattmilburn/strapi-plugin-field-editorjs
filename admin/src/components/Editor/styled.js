@@ -28,7 +28,7 @@ export const StyledEditor = styled.div`
     padding-right: 0;
     justify-content: space-between;
     left: -42px;
-    right: -38px;
+    right: -44px;
   }
 
   /* Keep toolbar content positioned on top of adjacent blocks. */
@@ -54,6 +54,8 @@ export const StyledEditor = styled.div`
 
   /* Apply Strapi theme to settings button. */
   .ce-toolbar__settings-btn {
+    width: 28px !important;
+    height: 32px !important;
     background-color: ${({ theme }) => theme.colors.neutral0};
     border: 1px solid ${({ theme }) => theme.colors.neutral200};
     box-shadow: ${({ theme }) => theme.shadows.filterShadow};
