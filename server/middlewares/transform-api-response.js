@@ -63,7 +63,7 @@ const transform = ( data, config ) => {
 // Transform API response by parsing data string to JSON for rich text fields.
 module.exports = async ( { strapi } ) => {
   strapi.server.use( async ( ctx, next ) => {
-    const config = await getService( 'config' ).getConfig();
+    const config = await getService( 'config' ).get();
 
     const shouldTransformResponse = (
       ! config.response ||
