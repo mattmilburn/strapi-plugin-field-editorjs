@@ -2,7 +2,11 @@
 
 module.exports = {
   default: {
-    transformApiResponse: false,
+    response: {
+      format: 'json',
+      removeTime: true,
+      removeVersion: true,
+    },
   },
   validator() {},
 };
