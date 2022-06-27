@@ -1,19 +1,19 @@
 'use strict';
 
-const { has, head, isArray, isString } = require( 'lodash' );
+const { get, has, head, isArray, isString } = require( 'lodash' );
 
 const { getService, isApiRequest } = require( '../utils' );
 
-// Recursively traverse the data to parse JSON fields.
-const traverse = data => {
+// Transform function which is used to transform the response object.
+const transform = ( data, config ) => {
   // Single entry.
   if ( has( data, 'attributes' ) ) {
-    return traverse( data.attributes );
+    return transform( data.attributes, config );
   }
 
-  // Array of entries.
+  // Collection of entries.
   if ( isArray( data ) && data.length && has( head( data ), 'attributes' ) ) {
-    return data.map( item => traverse( item ) );
+    return data.map( item => transform( item, config ) );
   }
 
   // Loop through properties.
@@ -24,12 +24,12 @@ const traverse = data => {
 
     // Single component.
     if ( has( value, 'id' ) ) {
-      data[ key ] = traverse( value );
+      data[ key ] = transform( value, config );
     }
 
     // Repeatable component or dynamic zone.
     if ( isArray( value ) && has( head( value ), 'id' ) ) {
-      data[ key ] = value.map( component => traverse( component ) );
+      data[ key ] = value.map( component => transform( component, config ) );
     }
 
     // Finally, if this is a JSON string, parse it into a JSON object.
@@ -38,7 +38,19 @@ const traverse = data => {
     // @TODO - Find a less lazy way to target the right fields.
     if ( isString( value ) && /^\{.*\}$/.test( value ) ) {
       try {
-        data[ key ] = JSON.parse( value );
+        let json = JSON.parse( value );
+
+        // Maybe remove time prop.
+        if ( config.response.removeTime ) {
+          delete json.time;
+        }
+
+        // Maybe remove version prop.
+        if ( config.response.removeVersion ) {
+          delete json.version;
+        }
+
+        data[ key ] = json;
       } catch ( e ) {
         // Do nothing.
       }
@@ -48,22 +60,25 @@ const traverse = data => {
   return data;
 };
 
-// Transform function which is used to transform the response object.
-const transform = async ( strapi, ctx, next ) => {
-  const config = await getService( 'config' ).getConfig();
-
-  await next();
-
-  if ( ! ctx.body || ! config.transformApiResponse ) {
-    return;
-  }
-
-  if ( ctx.body.data && isApiRequest( ctx ) ) {
-    ctx.body.data = traverse( ctx.body.data );
-  }
-};
-
 // Transform API response by parsing data string to JSON for rich text fields.
 module.exports = async ( { strapi } ) => {
-  strapi.server.use( ( ctx, next ) => transform( strapi, ctx, next ) );
+  strapi.server.use( async ( ctx, next ) => {
+    const config = await getService( 'config' ).getConfig();
+
+    const shouldTransformResponse = (
+      ! config.response ||
+      ! config.response.format ||
+      config.response.format !== 'json'
+    );
+
+    await next();
+
+    if ( ! ctx.body || shouldTransformResponse ) {
+      return;
+    }
+
+    if ( ctx.body.data && isApiRequest( ctx ) ) {
+      ctx.body.data = transform( ctx.body.data, config );
+    }
+  } );
 };
