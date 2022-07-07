@@ -35,7 +35,7 @@ const transform = ( data, config ) => {
     // Finally, if this is a JSON string, parse it into a JSON object.
     // We're just going to assume it is JSON if it begins and ends with {}.
     //
-    // @TODO - Find a less lazy way to target the right fields.
+    // @NOTE - This is a lazy way to target the richtext fields, but it works.
     if ( isString( value ) && /^\{.*\}$/.test( value ) ) {
       try {
         let json = JSON.parse( value );
@@ -52,7 +52,7 @@ const transform = ( data, config ) => {
 
         data[ key ] = json;
       } catch ( e ) {
-        // Do nothing.
+        console.error( e );
       }
     }
   } );
@@ -66,14 +66,14 @@ module.exports = async ( { strapi } ) => {
     const config = await getService( 'config' ).get();
 
     const shouldTransformResponse = (
-      ! config.response ||
-      ! config.response.format ||
-      config.response.format !== 'json'
+      config.response &&
+      config.response.format &&
+      config.response.format === 'json'
     );
 
     await next();
 
-    if ( ! ctx.body || shouldTransformResponse ) {
+    if ( ! ctx.body || ! shouldTransformResponse ) {
       return;
     }
 
